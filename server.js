@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(morgan('combined'))
 // Static files are served from the applications /public directory
-app.use(express.static(path.join(__dirname, "/public")))
+app.use(express.static(path.join(__dirname, "/build")))
 // All application requests starting with /api/
 // will use the express router
 app.use('/api', router)

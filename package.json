@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "cross-env SECRET=11111 nodemon server.js"
+    "dev": "cross-env SECRET=11111 nodemon server.js",
+    "heroku-postbuild": "cd client && yarn install && yarn build"
   },
   "repository": {
     "type": "git",
