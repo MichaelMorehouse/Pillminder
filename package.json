@@ -9,6 +9,10 @@
     "dev": "cross-env SECRET=11111 nodemon server.js",
     "heroku-postbuild": "cd client && yarn install && yarn build"
   },
+  "engines": {
+    "node": "10.1.0",
+    "yarn": "1.9.4"
+  },
   "repository": {
     "type": "git",
     "url": "https://www.github.com/MichaelMorehouse/ezauth"
@@ -21,10 +25,6 @@
   ],
   "author": "Michael Miller",
   "license": "ISC",
-  "engines": {
-    "node": "10.1.0",
-    "npm": "6.1.0"
-  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
