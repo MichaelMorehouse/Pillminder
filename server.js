@@ -27,7 +27,7 @@ app.use('/api', router)
 
 // Pull connection string from env var or 
 // fallback to local db during development
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ezauth'
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pillminder'
 const PORT = process.env.PORT || 5050
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true })

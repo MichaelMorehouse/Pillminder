@@ -21,7 +21,7 @@ const CreatePill = props => {
         <label>Current Available Count</label>
         <div>
           <Field
-            name="Count"
+            name="count"
             component="input"
             type="text"
             placeholder="Count"

@@ -2,9 +2,11 @@ import axios from 'axios'
 import types from './types'
 
 function getUserToken() {
-    const token = "Bearer " + localStorage.getItem('pillminder-token')
-    debugger
-    return token
+    var token = localStorage.getItem('pillminder-token')
+    if (token) {
+        return token = "Bearer " + token
+    }
+    return ''
 }
 
 export const signup = (formProps, callback) => async dispatch => {
@@ -23,7 +25,7 @@ export const signup = (formProps, callback) => async dispatch => {
 
 export const signin = (formProps, callback) => async dispatch => {
     try {
-
+        
         const response = await axios.post(
             'api/signin', 
             formProps
@@ -55,18 +57,28 @@ export const pillViewstate = viewstate => {
 
 export const createPill = (formProps, callback) => async dispatch => {
     try {
-        await axios({
+        const response = await axios({
             method: 'post',
             url: 'api/pills',
-            header: { 'Authorization': getUserToken()},
+            headers: { 'Authorization': getUserToken() },
             data: formProps
         })
-        .then(response => {
-            console.log(response)
-            callback()
-        })
-        .catch(err=>console.log(err))
+        console.log(response)
+        callback()
     } catch (err) {
         dispatch({type: types.PILL_ERROR, payload: 'Error creating pill'})
+    }
+}
+
+export const getPills = () => async dispatch => {
+    try {
+        const response = await axios({
+            method: 'get',
+            url: 'api/pills',
+            headers: { 'Authorization': getUserToken() },
+        })
+        dispatch({type: types.GET_PILLS, payload: response.data})
+    } catch (err) {
+        dispatch({type: types.PILL_ERROR, payload: 'Error getting pills'})
     }
 }
