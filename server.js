@@ -11,8 +11,10 @@ const app = express()
 // requests, run `npm install cors` and uncomment the code below
 // Additional configuration may be required, see
 // https://www.npmjs.com/package/cors
-// const cors = require('cors')
-// app.use(cors())
+if (process.env.NODE_ENV === 'development') {
+    const cors = require('cors')
+    app.use(cors())
+}
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
