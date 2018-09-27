@@ -5,17 +5,13 @@ import PillDetails from './PillDetails'
 import * as actions from '../../actions'
 
 class Pill extends Component {
-    constructor(props) {
-      super(props)
-    
-      this.state = {
-         
-      }
-      this.onCreate = this.onCreate.bind(this)
-    }
+    // constructor(props) {
+    //   super(props)
+
+    //   this.onCreate = this.onCreate.bind(this)
+    // }
     
     onCreate = formProps => {
-        debugger
         this.props.createPill(formProps, function() {
           console.log("Called it!")
         })
@@ -24,7 +20,7 @@ class Pill extends Component {
     renderView() {
         switch (this.props.viewstate) {
             case 'create':
-                return <CreatePill onSubmit={formProps=>this.onCreate(formProps)}/>
+                return <CreatePill onSubmit={this.onCreate}/>
             
             default:
                 return <PillDetails />
