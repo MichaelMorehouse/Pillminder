@@ -2,7 +2,7 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
 const CreatePill = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
+  const { handleSubmit, pillViewstate, pristine, reset, submitting } = props
 
   return (
     <form onSubmit={handleSubmit}>
@@ -34,6 +34,9 @@ const CreatePill = props => {
         </button>
         <button type="button" disabled={pristine || submitting} onClick={reset}>
           Clear Values
+        </button>
+        <button type="button" disabled={submitting} onClick={()=>pillViewstate('')}>
+          Back to Details
         </button>
       </div>
     </form>

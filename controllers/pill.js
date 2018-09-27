@@ -13,12 +13,22 @@ exports.getPills = function(req, res, next) {
 }
 
 exports.createPill = function(req, res, next) {
-
     var pill = new Pill({
         name: req.body.name,
         count: req.body.count
     })
     User.findByIdAndUpdate(req.user.id, {$push: { pills: pill }}, {new: true})
     .then(user => res.json(user))
+    .catch(err=>next(err))
+}
+
+exports.editPill = function(req, res, next) {
+    console.log(req.user)
+    console.log(req.body)
+    User.updateOne({ _id: req.user.id, "pills._id": req.body.id},
+        { $set: { "pills.$.name": req.body.name, "pills.$.count": req.body.count }},
+        {new: true}
+    )
+    .then(user=>console.log(user))
     .catch(err=>next(err))
 }

@@ -1,35 +1,62 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Pill from './pill/Pill'
-import { getPills } from '../actions'
+import CreatePill from './pill/CreatePill'
+import * as actions from '../actions'
 
 class Pillbox extends Component {
+
+  componentDidMount() {
+    this.props.getPills()
+  }
+
+  onCreate = formProps => {
+    this.props.createPill(formProps, function() {
+      console.log("Called it!")
+    })
+  }
+
   renderPills() {
-    const pills = this.props.pills.map(pill => {
-      if (this.props.pills) {
+    let pills
+    if(this.props.pills) {
+      pills = this.props.pills.map(pill => {
+          return <Pill key={pill._id} {...pill} />
+      })
+    }
+    return pills
+  }
+
+  renderView = () => {
+    switch (this.props.viewstate) {
+      case 'create':
+        return <CreatePill 
+                  onSubmit={this.onCreate}
+                  pillViewstate={this.props.pillViewstate}
+                />
+      
+      default:
         return (
           <div>
-            <div>Name: {pill.name}</div>
-            <div>Count: {pill.count}</div>
+            <button onClick={()=>this.props.pillViewstate('create')}>Add Medication</button>
+            {this.renderPills()}
           </div>
         )
-      }
-    })
-    return pills
+    }
   }
 
   render() {
     return (
       <div>
-        {this.renderPills()}
+        {this.renderView()}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  pills: state.pill.pills
+  pills: state.pill.pills,
+  viewstate: state.pill.viewstate
 })
 
-export default connect(mapStateToProps, getPills)(Pillbox)
+export default connect(mapStateToProps, actions)(Pillbox)
 

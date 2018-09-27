@@ -1,28 +1,51 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import CreatePill from './CreatePill'
-import PillDetails from './PillDetails'
 import * as actions from '../../actions'
-
+import EditPill from './EditPill'
+import DeletePill from './DeletePill'
 class Pill extends Component {
-
-    onCreate = formProps => {
-        this.props.createPill(formProps, function() {
-          console.log("Called it!")
+    constructor(props) {
+      super(props)
+    
+      this.state = {
+         viewstate: ''
+      }
+    }
+    
+    onEdit = formProps => {
+        formProps = {...formProps, id: this.props._id}
+        this.props.editPill(formProps, () => {
+            console.log("Clear!!")
+            this.setState({viewstate: ''})
         })
     }
 
     renderView() {
-        switch (this.props.viewstate) {
-            case 'create':
-                return <CreatePill onSubmit={this.onCreate}/>
-            
+        switch (this.state.viewstate) {
+            case 'edit':
+                const initialState = {
+                    name: this.props.name,
+                    count: this.props.count
+                }
+                return <EditPill 
+                            onSubmit={this.onEdit}
+                            initialValues={initialState}
+                        />
+            case 'delete':
+                return <DeletePill />
             default:
                 return (
                     <div>
-                        <button onClick={()=>this.props.pillViewstate('create')}>Add Medication</button>
-                    </div>            
-                )
+                        <br />
+                        <span>
+                            <span>Name: {this.props.name} </span>
+                            <span>Count: {this.props.count} </span>
+                            <button onClick={()=>this.setState({viewstate: 'edit'})}>Edit</button>
+                            <button onClick={()=>this.setState({viewstate: 'delete'})}>Delete</button>
+                        </span>
+                        <br />
+                    </div>
+                )        
         }
     }
 
@@ -35,8 +58,4 @@ class Pill extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    viewstate: state.pill.viewstate
-})
-
-export default connect(mapStateToProps, actions)(Pill)
+export default connect(null, actions)(Pill)

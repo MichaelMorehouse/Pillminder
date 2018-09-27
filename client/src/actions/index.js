@@ -82,3 +82,20 @@ export const getPills = () => async dispatch => {
         dispatch({type: types.PILL_ERROR, payload: 'Error getting pills'})
     }
 }
+
+export const editPill = (formProps, callback) => async dispatch => {
+    try {
+        console.log(formProps)
+        const { id } = formProps
+        const response = await axios({
+            method: 'put',
+            url: 'api/pills/' + id,
+            headers: { Authorization: getUserToken() },
+            data: formProps
+        })
+        console.log("Edited")
+        callback()        
+    } catch (err) {
+        dispatch({type: types.PILL_ERROR, payload: 'Error editing pill'})
+    }
+}

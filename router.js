@@ -22,4 +22,7 @@ router.route('/pills')
     .post(pill.createPill)
     .get(pill.getPills)
 
+router.route('/pills/:pill_id')
+    .put(pill.editPill)
+    
 module.exports = router
