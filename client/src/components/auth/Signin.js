@@ -5,15 +5,6 @@ import { connect } from 'react-redux'
 import * as actions from '../../actions'
 
 class Signin extends Component {
-    constructor(props) {
-      super(props)
-    
-      this.state = {
-         
-      }
-      this.onSubmit = this.onSubmit.bind(this)
-    }
-    
     onSubmit = (formProps) => {
         this.props.signin(formProps, () => {
             this.props.history.push('/')
@@ -24,7 +15,7 @@ class Signin extends Component {
         const { handleSubmit } = this.props
         
         return (
-          <form onSubmit={handleSubmit(()=>this.onSubmit())}>
+          <form onSubmit={handleSubmit}>
               <fieldset>
                   <label>Email</label>
                   <Field 
