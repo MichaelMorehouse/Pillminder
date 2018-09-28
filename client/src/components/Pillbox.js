@@ -7,12 +7,12 @@ import * as actions from '../actions'
 class Pillbox extends Component {
 
   componentDidMount() {
-    this.props.getPills()
+    if(!this.props.pills.length) this.props.getPills()
   }
 
   onCreate = formProps => {
-    this.props.createPill(formProps, function() {
-      console.log("Called it!")
+    this.props.createPill(formProps, () => {
+      this.props.pillViewstate('')
     })
   }
 

@@ -1,9 +1,15 @@
 import React from 'react'
 
-export default props => {
+const DeletePill = props => {
+  const { onDelete, onDecline } = props
+
   return (
     <div>
-      BALEETED
+      Are you sure?
+      <button onClick={onDelete}>Yes</button>
+      <button onClick={onDecline}>No</button>
     </div>
   )
 }
+
+export default DeletePill

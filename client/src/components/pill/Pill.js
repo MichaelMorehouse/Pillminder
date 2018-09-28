@@ -20,6 +20,17 @@ class Pill extends Component {
         })
     }
 
+    onDelete = () => {
+        this.props.deletePill(this.props._id, () => {
+            console.log("Deleted!!")
+            this.setState({viewstate: ''})
+        })
+    }
+
+    onDecline = () => {
+        this.setState({viewstate: ''})
+    }
+
     renderView() {
         switch (this.state.viewstate) {
             case 'edit':
@@ -32,7 +43,10 @@ class Pill extends Component {
                             initialValues={initialState}
                         />
             case 'delete':
-                return <DeletePill />
+                return <DeletePill 
+                            onDelete={this.onDelete}
+                            onDecline={this.onDecline}
+                        />
             default:
                 return (
                     <div>

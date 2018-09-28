@@ -63,7 +63,7 @@ export const createPill = (formProps, callback) => async dispatch => {
             headers: { 'Authorization': getUserToken() },
             data: formProps
         })
-        console.log(response)
+        dispatch({type: types.GET_PILLS, payload: response.data})
         callback()
     } catch (err) {
         dispatch({type: types.PILL_ERROR, payload: 'Error creating pill'})
@@ -85,7 +85,6 @@ export const getPills = () => async dispatch => {
 
 export const editPill = (formProps, callback) => async dispatch => {
     try {
-        console.log(formProps)
         const { id } = formProps
         const response = await axios({
             method: 'put',
@@ -97,5 +96,19 @@ export const editPill = (formProps, callback) => async dispatch => {
         callback()        
     } catch (err) {
         dispatch({type: types.PILL_ERROR, payload: 'Error editing pill'})
+    }
+}
+
+export const deletePill = (id, callback) => async dispatch => {
+    try {
+        const response = await axios({
+            method: 'delete',
+            url: 'api/pills/' + id,
+            headers: { Authorization: getUserToken() },
+        })
+        dispatch({type: types.GET_PILLS, payload: response.data})
+        callback()   
+    } catch (err) {
+        dispatch({type: types.PILL_ERROR, payload: 'Error deleting pill'})
     }
 }
