@@ -24,5 +24,6 @@ router.route('/pills')
 
 router.route('/pills/:pill_id')
     .put(pill.editPill)
+    .delete(pill.deletePill)
     
 module.exports = router

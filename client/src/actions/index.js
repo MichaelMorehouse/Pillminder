@@ -93,7 +93,7 @@ export const editPill = (formProps, callback) => async dispatch => {
             headers: { Authorization: getUserToken() },
             data: formProps
         })
-        console.log("Edited")
+        dispatch({type: types.GET_PILLS, payload: response.data})
         callback()        
     } catch (err) {
         dispatch({type: types.PILL_ERROR, payload: 'Error editing pill'})

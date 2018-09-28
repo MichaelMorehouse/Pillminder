@@ -23,12 +23,15 @@ exports.createPill = function(req, res, next) {
 }
 
 exports.editPill = function(req, res, next) {
-    console.log(req.user)
-    console.log(req.body)
-    User.updateOne({ _id: req.user.id, "pills._id": req.body.id},
-        { $set: { "pills.$.name": req.body.name, "pills.$.count": req.body.count }},
-        {new: true}
-    )
-    .then(user=>console.log(user))
+    User.findOneAndUpdate({_id: req.user.id, "pills._id": req.body.id},
+    { $set: {"pills.$.name": req.body.name, "pills.$.count": req.body.count}},
+    { new: true })
+    .then(user => {
+        res.json(user.pills)
+    })
     .catch(err=>next(err))
+}
+
+exports.deletePill = function(req, res, next) {
+
 }
